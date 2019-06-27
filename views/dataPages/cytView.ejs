@@ -126,7 +126,7 @@
 
 
                 var elementsdata = data;
-                console.log(JSON.stringify(elementsdata))
+                // console.log(JSON.stringify(elementsdata))
 
                 var cy = window.cy = cytoscape({
 
@@ -138,36 +138,23 @@
             
                     boxSelectionEnabled: false,
 
-                });
+                });            
 
-            var a = cy.getElementById('GO:0042214');
-    
-			var makeTippy = function(node, text){
-				return tippy( node.popperRef(), {
-					content: function(){
-						var div = document.createElement('div');
-						div.innerHTML = text;
-						return div;
-					},
-					trigger: 'manual',
-					arrow: true,
-					placement: 'top',
-					hideOnClick: false,
-					multiple: true,
-					sticky: true
-				} );
-			};
-			// var tippyA = makeTippy(a, 'foo');
-			// tippyA.show();
-
-
-                cy.on('tap', 'node', function(event){
+                cy.on('mousedown', 'node', function(event){
                     // console.log('hi')
                     var node = event.target;
-                    console.log(node)
                     
-                    var tippyA = makeTippy(node, '<i>foo</i>');
-			        tippyA.show();
+                    var tippyA = tippy(node.popperRef(), {
+                        theme: 'light',
+                        content: 'You can select the text inside here.',
+                        trigger: 'manual'
+                    });
+                    
+                    tippyA.show();
+
+                    node.on('mouseup', function(event){
+                        tippyA.hide();
+                    });
                     
                 });
 
