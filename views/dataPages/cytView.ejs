@@ -18,6 +18,7 @@
 
     <script src="/static/js/cytoscape.min.js"></script>
 
+    <!-- <link type="text/css" rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/qtip2/3.0.3/basic/jquery.qtip.css" /> -->
 
 </head>
 <body>
@@ -97,15 +98,22 @@
 <script src="/static/js/cytoscape-cola.js"></script>
 <script src="/static/js/fcose.js"></script>
 <script src="/static/js/custom.js"></script>
+
+
 <script src="https://unpkg.com/layout-base/layout-base.js"></script>
 <script src="https://unpkg.com/avsdf-base/avsdf-base.js"></script>
 <script src="/static/js/cytoscape-avsdf.js"></script>
+<script src="https://unpkg.com/popper.js@1.14.7/dist/umd/popper.js"></script>
+<script src="/static/js/cytoscape-popper.js"></script>
+<script src="https://unpkg.com/tippy.js@4.0.1/umd/index.all.min.js"></script>
+<link rel="stylesheet" href="https://unpkg.com/tippy.js@4.0.1/index.css" />
 <!-- <script src="/static/js/code.js"></script> -->
+<!-- <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.15.0/esm/popper.js"></script> -->
+<!-- <script type="text/javascript" src="https://cdnjs.com/libraries/popper.js"></script> -->
 
 <script>
     $(document).foundation();
     $(document).ready(function () {
-        // build pagination
 
         $("#cy").hide();
 
@@ -120,9 +128,7 @@
                 var elementsdata = data;
                 console.log(JSON.stringify(elementsdata))
 
-                // console.log(elementsdata)
-
-                var cy = cytoscape({
+                var cy = window.cy = cytoscape({
 
                     container: document.getElementById('cy'), // container to render in
 
@@ -132,6 +138,37 @@
             
                     boxSelectionEnabled: false,
 
+                });
+
+            var a = cy.getElementById('GO:0042214');
+    
+			var makeTippy = function(node, text){
+				return tippy( node.popperRef(), {
+					content: function(){
+						var div = document.createElement('div');
+						div.innerHTML = text;
+						return div;
+					},
+					trigger: 'manual',
+					arrow: true,
+					placement: 'top',
+					hideOnClick: false,
+					multiple: true,
+					sticky: true
+				} );
+			};
+			// var tippyA = makeTippy(a, 'foo');
+			// tippyA.show();
+
+
+                cy.on('tap', 'node', function(event){
+                    // console.log('hi')
+                    var node = event.target;
+                    console.log(node)
+                    
+                    var tippyA = makeTippy(node, '<i>foo</i>');
+			        tippyA.show();
+                    
                 });
 
 
@@ -516,23 +553,11 @@
                                     $('#layout1').trigger('click');
                                 }
                             });
-
-                            
-                            // cy.json({ elements: newGraphElements });
-                            // clear current graph
-                            // populate with newGraphElements
-                            // use cyptoscape library methods
-
-
                         }
                     });
                 });
-
             }
         })
-        //console.log(mydata);
-
-
     });
 
 
