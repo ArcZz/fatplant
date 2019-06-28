@@ -43,11 +43,11 @@
 <div class="row columns">
     <div class="columns small-10 small-centered">
         <div class="btn-group">
-            <button id="layout1" class="button button1">CoSE</button>
-            <button id="layout2" class="button button2">Cola</button>
-            <button id="layout3" class="button button3">Circle</button>
-            <button id="layout4" class="button button4">Concentric</button>
-            <button id="layout5" class="button button5">Avsdf</button>
+            <button id="layout1" title="Dynamic Node Cluster" class="button button1">CoSE</button>
+            <button id="layout2" title="D3 Force Graph" class="button button2">Cola</button>
+            <button id="layout3" title="Circluar Pattern" class="button button3">Circle</button>
+            <button id="layout4" title="Symetric" class="button button4">Concentric</button>
+            <button id="layout5" title="Balanced Circular Pattern" class="button button5">Avsdf</button>
         </div>
         <br>
         <div id="filter-box">
@@ -121,18 +121,13 @@
                 $("#loading").hide();
                 $("#cy").show();
 
-
                 var elementsdata = data;
-                // console.log(JSON.stringify(elementsdata))
 
                 var cy = window.cy = cytoscape({
 
-                    container: document.getElementById('cy'), // container to render in
-
+                    container: document.getElementById('cy'),
                     elements: elementsdata,
-
                     autounselectify: true,
-            
                     boxSelectionEnabled: false,
 
                 });
@@ -152,6 +147,8 @@
 
                     var node = event.target;
                     nodeData = node.data();
+
+                    console.log(node)
 
                     for( var j=0;j<nodeDescriptionData.length;j++){
                         if(nodeData['id'] == nodeDescriptionData[j]['GO']){
