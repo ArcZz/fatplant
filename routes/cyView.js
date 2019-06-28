@@ -6,6 +6,8 @@ var bodyParser = require('body-parser');
 router.use(bodyParser.json());
 router.use(bodyParser.urlencoded({extended: false}));
 
+const csvNodeDescriptions = './fileCyt/GO_info.csv'
+
 
 const csvFilePath='./fileCyt/network.csv';
 const csvEntityTableFilePath = './fileCyt/GO_AllLists.csv'
@@ -17,6 +19,15 @@ router.get('/', function(req, res, next) {
 
     });
 });
+
+router.get('/node-description', function(req,res,next){
+
+    csv().fromFile(csvNodeDescriptions)
+        .then((jsonObj)=>{
+            res.send(jsonObj);
+        });
+});
+
 
 router.get('/entity-table', function(req,res,next){
 

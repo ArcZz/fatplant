@@ -107,9 +107,6 @@
 <script src="/static/js/cytoscape-popper.js"></script>
 <script src="https://unpkg.com/tippy.js@4.0.1/umd/index.all.min.js"></script>
 <link rel="stylesheet" href="https://unpkg.com/tippy.js@4.0.1/index.css" />
-<!-- <script src="/static/js/code.js"></script> -->
-<!-- <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.15.0/esm/popper.js"></script> -->
-<!-- <script type="text/javascript" src="https://cdnjs.com/libraries/popper.js"></script> -->
 
 <script>
     $(document).foundation();
@@ -138,24 +135,41 @@
             
                     boxSelectionEnabled: false,
 
-                });            
+                });
+
+                var nodeDescriptionData = null;
+                // get node description info
+                $.get({
+                    url: '/cy/node-description',
+                    success: function (data) {
+
+                        nodeDescriptionData = data;
+
+                    }
+                });
 
                 cy.on('mousedown', 'node', function(event){
-                    // console.log('hi')
-                    var node = event.target;
-                    
-                    var tippyA = tippy(node.popperRef(), {
-                        theme: 'light',
-                        content: 'You can select the text inside here.',
-                        trigger: 'manual'
-                    });
-                    
-                    tippyA.show();
 
-                    node.on('mouseup', function(event){
-                        tippyA.hide();
-                    });
-                    
+                    var node = event.target;
+                    nodeData = node.data();
+
+                    for( var j=0;j<nodeDescriptionData.length;j++){
+                        if(nodeData['id'] == nodeDescriptionData[j]['GO']){
+                            var tippyA = tippy(node.popperRef(), {
+                                content: nodeDescriptionData[j]['Description'].split(' ').map((s) => s.charAt(0).toUpperCase() + s.substring(1)).join(' '),
+                                interactive: true,
+                                animation: 'perspective',
+                                trigger: 'manual'
+                            });
+                            
+                            tippyA.show();
+
+                            node.on('mouseup', function(event){
+                                tippyA.hide();
+                            });
+                            break;
+                        }
+                    }
                 });
 
 
