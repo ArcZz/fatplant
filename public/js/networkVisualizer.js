@@ -31,12 +31,10 @@ $(document).foundation();
                     }
                 });
 
-                cy.on('mousedown', 'node', function(event){
+                cy.on('mouseover', 'node', function(event){
 
                     var node = event.target;
                     nodeData = node.data();
-
-                    console.log(node)
 
                     for( var j=0;j<nodeDescriptionData.length;j++){
                         if(nodeData['id'] == nodeDescriptionData[j]['GO']){
@@ -48,15 +46,16 @@ $(document).foundation();
                             });
                             
                             tippyA.show();
-
-                            node.on('mouseup', function(event){
-                                tippyA.hide();
-                            });
                             break;
                         }
                     }
                 });
 
+                cy.on('mouseout', 'node', function(event){
+
+                    $('.tippy-popper').remove();
+
+                });
 
                 $("#layout1").click(function(){
                     var layout = cy.layout({

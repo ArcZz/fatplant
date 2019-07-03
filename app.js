@@ -46,6 +46,7 @@ var tableRouter = require('./routes/table'); //table
 var pageRouter = require('./routes/page'); //page-about
 var fileRouter = require('./routes/file'); //file upload
 var cytRouter = require('./routes/cyView') // for Cytoscape
+var proteinNetRouter = require('./routes/proteinNetView')
 
 //rountering ===>
 app.use('/', indexRouter);
@@ -53,7 +54,7 @@ app.use('/table', tableRouter);
 app.use('/page', pageRouter);
 app.use('/file', fileRouter);
 app.use('/cy', cytRouter);
-
+app.use('/protein-network', proteinNetRouter);
 
 // //API- ignore and delete below if we dont have api route
 // var dataRouter = require('./routes/api/data');
