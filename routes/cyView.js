@@ -15,7 +15,7 @@ const csv=require('csvtojson');
 
 router.get('/', function(req, res, next) {
     res.render('dataPages/cytView', {
-        title: 'Cytoscape',
+        title: 'GO Network',
 
     });
 });

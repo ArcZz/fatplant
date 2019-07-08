@@ -14,7 +14,7 @@ const csv=require('csvtojson');
 
 router.get('/', function(req, res, next) {
     res.render('dataPages/proteinNetView', {
-        title: 'Cytoscape',
+        title: 'Protein-Protein Network',
 
     });
 });
